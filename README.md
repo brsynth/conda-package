@@ -13,4 +13,4 @@ git clone https://github.com/brsynth/module.git
 ```sh
 bash custom.sh
 ```
-After this process, there will be some details to customise on your own. Locations will be displayed after the scripts ended.
+After this process, there will be some details to customise on your own. Locations will be displayed after the script ended.
