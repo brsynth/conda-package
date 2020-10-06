@@ -4,6 +4,8 @@ This repository contains the skeleton to create, test and publish a Python modul
 
 ## Create new module
 
+Before all, a new repository has to be created.
+
 ### Download
 ```sh
 git clone https://github.com/brsynth/module.git
