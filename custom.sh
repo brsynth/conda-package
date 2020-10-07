@@ -62,9 +62,8 @@ sed -i "" "s/TO_FILL/$name/" .github/workflows/publish.yml
 git remote set-url origin $url
 echo custom.sh >> .gitignore
 
-# # Commitizen
-# npm init
-# npm set init.author.name
+# Commitizen
+commitizen init cz-conventional-changelog --save-dev --save-exact
 
 echo
 echo Customisation is completed!
