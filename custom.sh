@@ -10,10 +10,10 @@ npm init
 npm install --silent node-jq --save
 
 # Read informations from package.json
-name=$(./node_modules/node-jq/bin/jq ".name"  package.json)
-descr=$(./node_modules/node-jq/bin/jq ".description"  package.json)
-url=$(./node_modules/node-jq/bin/jq ".repository.url"  package.json)
-authors=$(./node_modules/node-jq/bin/jq ".author"  package.json)
+name=$(./node_modules/node-jq/bin/jq -r ".name"  package.json)
+descr=$(./node_modules/node-jq/bin/jq -r ".description"  package.json)
+url=$(./node_modules/node-jq/bin/jq -r ".repository.url"  package.json)
+authors=$(./node_modules/node-jq/bin/jq -r ".author"  package.json)
 read -p 'Corresponding author(s) ('"$authors"'): ' corr_authors
 
 # escape srings
