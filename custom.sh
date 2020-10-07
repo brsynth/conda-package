@@ -1,10 +1,27 @@
 #!/bin/bash
 
-read -p 'Name of the module: '       name
-read -p 'Module short description: ' descr
-read -p 'URL of repository: '        url
-read -p 'Author(s): '                authors
-read -p 'Corresponding author(s): '  corr_authors
+# Commitizen
+npm init
+# npm install -g json
+# json -I -f package.json -e 'this.name="$name"'
+# json -I -f package.json -e 'this.description="$descr"'
+# json -I -f package.json -e 'this.repository.url="$url"'
+# json -I -f package.json -e 'this.authors="$authors"'
+npm install --silent node-jq --save
+
+# Read informations from package.json
+name=$(./node_modules/node-jq/bin/jq ".name"  package.json)
+descr=$(./node_modules/node-jq/bin/jq ".description"  package.json)
+url=$(./node_modules/node-jq/bin/jq ".repository.url"  package.json)
+authors=$(./node_modules/node-jq/bin/jq ".author"  package.json)
+read -p 'Corresponding author(s) ('"$authors"'): ' corr_authors
+
+# escape srings
+name_e=$(printf '%s\n' "$name" | sed -e 's/[\/&]/\\&/g')
+descr_e=$(printf '%s\n' "$descr" | sed -e 's/[\/&]/\\&/g')
+url_e=$(printf '%s\n' "$url" | sed -e 's/[\/&]/\\&/g')
+authors_e=$(printf '%s\n' "$authors" | sed -e 's/[\/&]/\\&/g')
+corr_authors_e=$(printf '%s\n' "$corr_authors" | sed -e 's/[\/&]/\\&/g')
 
 
 # README.md
@@ -27,20 +44,23 @@ sed -i "" "s/\"TO_FILL\"/\"$name\"/"                                            
 sed -i "" "s/from TO_FILL import TO_FILL/from $name import $name/"               $name/__main__.py
 
 # extras
-sed -i "" "s/PACKAGE=TO_FILL/PACKAGE=$name/"                 extras/.env
-sed -i "" "s/URL=TO_FILL/URL=$url/"                          extras/.env
-sed -i "" "s/AUTHORS=TO_FILL/AUTHORS=$authors/"              extras/.env
-sed -i "" "s/CORR_AUTHOR=TO_FILL/CORR_AUTHOR=$corr_authors/" extras/.env
-sed -i "" "s/DESCR=TO_FILL/DESCR=$descr/"                    extras/.env
+sed -i "" "s/PACKAGE=TO_FILL/PACKAGE=$name_e/"                   extras/.env
+sed -i "" "s/DESCR='TO_FILL'/DESCR='$descr_e'/"                  extras/.env
+sed -i "" "s/URL=TO_FILL/URL='$url_e'/"                          extras/.env
+sed -i "" "s/AUTHORS='TO_FILL'/AUTHORS='$authors_e'/"            extras/.env
+sed -i "" "s/CORR_AUTHOR=TO_FILL/CORR_AUTHOR='$corr_authors_e'/" extras/.env
 
 # tests
 sed -i "" "s/mod_name = 'TO_FILL'/mod_name = '$name'/" tests/module.py
 
 # GitHub
-sed -i "" "s/TO_FILL/$name/" .github/publish.yml
+sed -i "" "s/TO_FILL/$name/" .github/workflows/publish.yml
 git remote set-url origin $url
-mv ../module ../$name
 echo custom.sh >> .gitignore
+
+# # Commitizen
+# npm init
+# npm set init.author.name
 
 echo
 echo Customisation is completed!
