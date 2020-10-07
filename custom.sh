@@ -15,6 +15,10 @@ descr=$(./node_modules/node-jq/bin/jq -r ".description"  package.json)
 url=$(./node_modules/node-jq/bin/jq -r ".repository.url"  package.json)
 authors=$(./node_modules/node-jq/bin/jq -r ".author"  package.json)
 read -p 'Corresponding author(s) ('"$authors"'): ' corr_authors
+if [ -z "$corr_authors" ]
+then
+      corr_authors=$authors
+fi
 
 # escape srings
 name_e=$(printf '%s\n' "$name" | sed -e 's/[\/&]/\\&/g')
