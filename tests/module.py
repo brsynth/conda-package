@@ -11,8 +11,9 @@ from os import path as os_path
 class module(Main):
     __test__ = False
 
-    mod_name = 'TO_FILL'
-    cls_name = 'TO_FILL'
+    mod_name  = 'TO_FILL'
+    cls_name  = 'TO_FILL'
+    func_name = 'TO_FILL'
     cmd  = 'TO_FILL'.split()
     bap  = getattr(__import__(mod_name), 'build_args_parser')
     args = bap().parse_args(cmd)
