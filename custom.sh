@@ -35,6 +35,14 @@ sed -i "" "s/python -m TO_FILL/python -m $name/"                               R
 sed -i "" "s/* \*\*TO_FILL\*\*$/* **$corr_authors**/"                          README.md
 sed -i "" "s/* TO_FILL$/* $authors/"                                           README.md
 
+# RELEASE.md
+cat <<EOT >> RELEASE.md
+# Release history
+
+## 1.0.0
+- chore(release): first release
+EOT
+
 # src
 mv TO_FILL $name
 touch $name/$name.py
