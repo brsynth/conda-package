@@ -55,7 +55,7 @@ python -m TO_FILL
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
-### How to cite RetroRules?
+### How to cite TO_FILL?
 Please cite:
 
 TO_FILL
