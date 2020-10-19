@@ -2,11 +2,6 @@
 
 # Commitizen
 npm init
-# npm install -g json
-# json -I -f package.json -e 'this.name="$name"'
-# json -I -f package.json -e 'this.description="$descr"'
-# json -I -f package.json -e 'this.repository.url="$url"'
-# json -I -f package.json -e 'this.authors="$authors"'
 npm install --silent node-jq --save
 
 # Read informations from package.json
@@ -20,7 +15,7 @@ then
       corr_authors=$authors
 fi
 
-# escape srings
+# escape strings
 name_e=$(printf '%s\n' "$name" | sed -e 's/[\/&]/\\&/g')
 descr_e=$(printf '%s\n' "$descr" | sed -e 's/[\/&]/\\&/g')
 url_e=$(printf '%s\n' "$url" | sed -e 's/[\/&]/\\&/g')
@@ -48,14 +43,17 @@ sed -i "" "s/\"TO_FILL\"/\"$name\"/"                                            
 sed -i "" "s/from TO_FILL import TO_FILL/from $name import $name/"               $name/__main__.py
 
 # extras
-sed -i "" "s/PACKAGE=TO_FILL/PACKAGE=$name_e/"                   extras/.env
-sed -i "" "s/DESCR='TO_FILL'/DESCR='$descr_e'/"                  extras/.env
-sed -i "" "s/URL=TO_FILL/URL='$url_e'/"                          extras/.env
-sed -i "" "s/AUTHORS='TO_FILL'/AUTHORS='$authors_e'/"            extras/.env
-sed -i "" "s/CORR_AUTHOR=TO_FILL/CORR_AUTHOR='$corr_authors_e'/" extras/.env
+sed -i "" "s/PACKAGE=TO_FILL/PACKAGE=$name_e/"                 extras/.env
+sed -i "" "s/DESCR='TO_FILL'/DESCR='$descr_e'/"                extras/.env
+sed -i "" "s/URL=TO_FILL/URL=$url_e/"                          extras/.env
+sed -i "" "s/AUTHORS='TO_FILL'/AUTHORS='$authors_e'/"          extras/.env
+sed -i "" "s/CORR_AUTHOR=TO_FILL/CORR_AUTHOR=$corr_authors_e/" extras/.env
 
 # tests
 sed -i "" "s/mod_name = 'TO_FILL'/mod_name = '$name'/" tests/module.py
+
+# recipe
+sed -i "" "s/TO_FILL/$name/" recipe/meta.yaml
 
 # GitHub
 sed -i "" "s/TO_FILL/$name/" .github/workflows/publish.yml
